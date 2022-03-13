@@ -7,7 +7,7 @@
                 """,
     "author": "BrowseInfo",
     "website" : "https://www.tradetec.info",
-    "depends" : ['base','web','sale_management','stock', 'purchase','pos_quantity_barcodes'],
+    "depends" : ['base','web','sale_management','stock', 'purchase'],
     "data": [
         'security/ir.model.access.csv',
         'data/barcode_config_data.xml',
