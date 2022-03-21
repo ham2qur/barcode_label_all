@@ -16,7 +16,8 @@
 								<t t-if="doc.product_id.barcode">
 									<tr>
 										<td style="text-align: center; vertical-align: middle;" class="col-8">
-											<img alt="Barcode" t-att-src="'/report/barcode/?type=EAN13&amp;value=2100005111058&amp;width=600&amp;height=100'" 
+											<img alt="Barcode" 
+											t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % (barcode_info['barcode_type'], doc.product_id.barcode_with_qty(doc.product_qty), 600, 100)" 
                                             t-attf-style="width: #{barcode_info['barcode_width']}px;height: #{barcode_info['barcode_height']}px;"
                                                    />
 											<br />
