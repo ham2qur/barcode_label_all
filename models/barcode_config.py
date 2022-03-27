@@ -26,6 +26,7 @@ class BarcodeConfigSettings(models.TransientModel):
         ('after', _('After')),
         ('before', _('Before')),
     ], string='Position', translate=True)
+    barcode_decimal_places = fields.Integer('Decimal Places', default=2)
 
     @api.model
     def default_get(self, fields):
@@ -45,6 +46,7 @@ class BarcodeConfigSettings(models.TransientModel):
             'label_height': barcode_config.label_height,
             'barcode_currency_id': barcode_config.barcode_currency_id.id,
             'barcode_currency_position': barcode_config.barcode_currency_position,
+            'barcode_decimal_places': barcode_config.barcode_decimal_places
         }
 
     def set_values(self):
@@ -59,6 +61,7 @@ class BarcodeConfigSettings(models.TransientModel):
             'label_height': self.label_height,
             'barcode_currency_id': self.barcode_currency_id.id,
             'barcode_currency_position': self.barcode_currency_position,
+            'barcode_decimal_places': self.barcode_decimal_places
         }
 
         barcode_config.write(vals)
@@ -86,3 +89,4 @@ class BarcodeLabelsConfig(models.Model):
         ('after', _('After')),
         ('before', _('Before')),
     ], string='Position', translate=True)
+    barcode_decimal_places = fields.Integer('Decimal places', default=2)
