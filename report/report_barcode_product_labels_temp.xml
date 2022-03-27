@@ -6,34 +6,34 @@
 				<t t-foreach="range(doc.qty)" t-as='l'>
 					<div class="page">
 						<div class="col-4" style="padding:0;">
-							<table style="border-bottom: 0px solid white !important;width: 3in;">
+							<table style="border-bottom: 0px solid white !important; width: 3in;">
 								<t t-set="barcode_info" t-value="get_barcode_details_info"/>
 								<tr>
-									<th style="text-align: center;">
+									<th style="font-size: 10px;">
 										[<strong t-field="doc.product_id.default_code"/>] <strong t-field="doc.product_id.name"/>
 									</th>
 								</tr>
 								<t t-if="doc.product_id.barcode">
 									<tr>
-										<td style="text-align: center; vertical-align: middle;" class="col-8">
-											<img alt="Barcode" 
-											t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % (barcode_info['barcode_type'], doc.product_id.barcode_with_qty(doc.product_qty), 600, 100)" 
-                                            t-attf-style="width: #{barcode_info['barcode_width']}px;height: #{barcode_info['barcode_height']}px;"
+										<td style="vertical-align: middle; horizontal-align: left;" class="col-8">
+											<figure>
+											<img alt="Barcode" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s&amp;humanreadable=1' % (barcode_info['barcode_type'], doc.product_id.barcode_with_qty(doc.product_qty), 600, 200)" 
+                                            t-attf-style="width: #{barcode_info['barcode_width']}px; height: #{barcode_info['barcode_height']}px;"
                                                    />
-											<br />
-											<span t-esc="doc.product_id.barcode_with_qty(doc.product_qty)"/>
+											<!-- <figcaption style="font-size: 10px; left: 10" t-esc="doc.product_id.barcode_with_qty(doc.product_qty)"/> -->
+											</figure>
 										</td>
-										<td style="padding:10px; font-size:15px;text-align:center" class="col-4">
+										<td style="padding:10px; font-size:15px; vertical-align: middle; text-align: right;" class="col-4">
 											<t t-if="barcode_info['barcode_currency_position'] == 'before'">
 												<strong>
-													<span t-esc="barcode_info['barcode_currency_id'].symbol" />
-													<span t-field="doc.product_id.list_price"/>
+													<span t-esc="doc.product_id.uom_id.name" />
+													<span t-field="doc.product_qty"/>
 												</strong>
 											</t>
-											<t t-if="barcode_info['barcode_currency_position'] != 'before'">
+											<t  t-if="barcode_info['barcode_currency_position'] != 'before'">
 												<strong>
-													<span t-field="doc.product_id.list_price"/>
-													<span t-esc="barcode_info['barcode_currency_id'].symbol" />
+													<span t-field="doc.product_qty"/>
+													<span t-esc="doc.product_id.uom_id.name" />
 												</strong>
 											</t>
 										</td>
