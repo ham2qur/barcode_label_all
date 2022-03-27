@@ -8,6 +8,9 @@ _logger = logging.getLogger(__name__)
 
 BARCODE_PREFIX = "21"
 EAN13_LENGTH = 13
+PRODUCT_REF_LENGTH = 5
+BARCODE_AMOUNT_PLACES = 5
+BARCODE_TEMPLATE = "%s%s%s%s"
 
 class Product(models.Model):
     _inherit = "product.product"
@@ -19,7 +22,15 @@ class Product(models.Model):
             reference = str(self.barcode[2:7])
             qty = str(int(product_qty))
             qty_decimal = str(product_qty).split(".")[1]
-            barcode = f"{BARCODE_PREFIX}{reference.zfill(5)}{qty.zfill(3)}{qty_decimal.ljust(2, '0')}"
+     
+            barcode_config = self.env.ref('bi_dynamic_barcode_labels.barcode_labels_config_data')
+            decimal_places = barcode_config.barcode_decimal_places
+            whole_places = BARCODE_AMOUNT_PLACES - decimal_places
+            
+            barcode = BARCODE_TEMPLATE % (BARCODE_PREFIX, 
+                                          reference.zfill(PRODUCT_REF_LENGTH), 
+                                          qty.zfill(whole_places), 
+                                          qty_decimal.ljust(decimal_places, '0'))
             checksum = self.env['barcode.nomenclature'].ean_checksum(barcode + "0")
             _logger.info(f"EAN check calculated as {checksum} for barcode {barcode} ")
             return barcode + str(checksum)
